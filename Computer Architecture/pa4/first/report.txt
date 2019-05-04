@@ -1,0 +1,18 @@
+===================
+= Data Structures =
+===================
+
+The main data structure I used for theis project was a 2D Array. This made sense as
+the way a cache was explained in class was essentially an n x m matrix that can be accessed based on 
+what was needed from the cache or memory. By using a 2D Array, I could access the specific point to
+check for reads, writes, hits, and misses. The 2D Array held Nodes in them, and those nodes had a
+tag to represent the tag bits.
+
+==================
+=  Observations  =
+==================
+
+When looking at the respective output of the no-prefetch cache and the with-prefetch cache, we see that
+the amount of writes is the same, but when prefetching it increases the chance of a hit in the cache,
+which then decreases the time for a miss in the cache. Thus, the running time of the with-prefetch is
+shorter, based on how close the data needed is.
