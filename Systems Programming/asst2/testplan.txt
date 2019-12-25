@@ -1,0 +1,8 @@
+﻿Andrew Cater                 ajc398         179009557
+Nathan Glickman         nmg 116         177003417
+11/22/2019
+Test plan
+        For this program we had to test both the process and the threads. When testing the program for efficiency we would test how long it takes to compile the data using different sized arrays or different numbers of threads/processes. 
+        When testing to see how much of an impact changing one of the variables we would run multiple tests for each. This means that for every test 25 separate runs would happen back to back. From this we would take the time of each and compile the average, max, min, and standard deviation for each set of 25 runs. This means that we can have a more accurate average. We limited it to 25 runs per tests as any more risked going over the limit of processes and threads which will result in an error.
+        From here we changed the number of threads/processes from 100 to 5 at intervals of 5. We believed that this would give us a good idea of how the change in the number of threads/processes affects the time taken as it gives us a fair amount of information about how much time the runs take over time.
+        Also we varied the amount of information stored in the array over certain numbers of threads/processes to see how threads/processes handle varied amount of data.

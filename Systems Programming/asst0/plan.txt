@@ -1,0 +1,121 @@
+Nathaniel Glikman
+nmg116
+177003417
+9/29/19
+
+ASST0: Walking in GCC's Footsteps
+
+Methodology:
+
+	The idea of this project was thought up by following the general guide Francisco set out for us. I started by creating the functions
+	I would need to work with strings, namely strlen() and strcmp(), as these would be used to move through the argument and 
+	check for validity of tokens. After that was out of the way, I set up a simple heiarchy. 
+
+	parseArgument() -> parseExpression() -> parseToken() -> checkToken()
+
+	First, we parse the argument, splitting off each expression based on if a semicolon split it or it was the end of the argument itself.
+	We then send it to parse the expression itself, where the bulk of the error checking is done. When the expression 
+	parser finds a token, it then sends it to the token parser, which in turn returns the type of token, which
+	goes all the way back to parseExpression() where we now know what kind of token we have. The kind of tokens are as follows:
+
+	1	Arithmetic Operator		+ - * /
+	2	Arithmetic Operand		1 2 3 4 5 6 7 8 9 0
+	3 	Logical Operator		AND OR
+	4 	Logical NOT Operator	NOT
+	5 	Logical Operand			true false
+
+	By using enums, we can keep a record of the type of op state, which are {NoState, Operand, Operator, NOT_Operator}. \
+	Based on the guidelines set out from sakai and piazza, we have a good idea of how an expression should look:
+
+	Operand -> Operator -> Operand
+	NOT_Operator -> Operand
+
+	If what we get as our expressions doesn't hold up to these standards, its time to throw a fit!
+
+Test Plan:
+
+	The following are different test cases I used to test and find bugs. They include the input, the 
+	correct output, and why it was useful to test with that argument
+
+	./check "1 + 2; true AND false"
+	Found 2 Expressions: 1 Logical and 0 Arithmetic
+	This is the correct format for 2 expressions. While checking for errors is the bulk of this assignment, it's important to still
+	check for the inputs we actually want, and make sure our error catching doesn't activate on these correct inputs
+	
+	./check "1 a 2"
+	Unknown Operator
+	Found 1 Expressions: 0 Logical and 0 Arithmetic
+	We need to check for when the operater isn't anything we know about. We always check to see if we had an operand first, so then we can
+	determine that this wierd character we got is clearly an unknown operator
+
+	./check "1"
+	Missing Operator
+	Found 1 Expressions: 0 Logical and 0 Arithmetic
+	When we get an input with only 1 character that we know about, such as 1 in this case, we know thats an operand, so we must be missing
+	an operator. The expression wasn't ended error didn't come up however, because we never got to the second operand, where we then check
+	for the end of the string or a semicolon
+
+	./check "1 AND 2"
+	Operand Type Mismatch
+	Found 1 Expressions: 1 Logical and 0 Arithmetic
+	As per the rules of old, we get an operand type mismatch, since the operator sets the expression type. The operands here are incorrect,
+	thus we get an operand type mismatch
+
+	./check "1 + 2 1"
+	Expression wasn't ended
+	Unexpected Operand
+	Found 1 Expressions: 0 Logical and 1 Arithmetic
+	Time to get tricky. The "1 + 2" part is a-ok, but then there isn't a semicolon or the end of the argument. Thus, the expression wasn't
+	ended. We also see the "1" at the end, and since we didn't expect it, it is considered an unexpected operand
+
+	./check "1 + 2 3 4 5 6 7 8 9"
+	Expression wasn't ended
+	Unexpected Operand
+	Unexpected Operand
+	Unexpected Operand
+	Unexpected Operand
+	Unexpected Operand
+	Unexpected Operand
+	Unexpected Operand
+	Found 1 Expressions: 0 Logical and 1 Arithmetic
+	This is a fun one, but it's basically the same as the previous example. We see the expression hasn't been ended, and we get 7
+	unexpected operands after the fact
+
+	./check "1 + 3;"
+	Expression Incomplete
+	Found 1 Expressions: 0 Logical and 1 Arithmetic
+	We need to check when we do get a semicolon, but theres nothing really after it. This is also an error, where the expression is
+	incomplete. 
+
+	./check 1 + 2
+	Error: Incorrect number of arguments. Please only use 1 argument
+	There will always be the case when you might forget to put quotations around your expression. This is incorrect, as the way the
+	program works is by using only 1 argument. Thus, we must check for this, and while trivial, it is still important
+
+	./check ""
+	Found 0 Expressions: 0 Logical and 0 Arithmetic
+	An important test case is when we do get 1 argument, but theres nothing in it. Since nothing was inputted, there cant be any errors,
+	and therefore we have 0 expressions
+
+	./check " "
+	Unknown Identifier
+	Found 0 Expressions: 0 Logical and 0 Arithmetic
+	When we input only a space however, thats wrong. It counts that space as a token, and it comes back as something we don't know about.
+	Because of that, we have an unknown identifier on our hands
+
+	./check ";"
+	Expression Incomplete
+	Found 1 Expressions: 0 Logical and 0 Arithmetic
+	What about when we have only a semicolon? We obviously had an expression, so it counts as finding one, but as before, we get an
+	expression incomplete error, since we saw a semicolon, we're expecting a new expression, but it never came
+
+	./check "1 a b c"
+	Unknown Operand
+	Unknown Operator
+	Expression wasn't ended
+	Unknown Operator
+	Found 1 Expressions: 0 Logical and 0 Arithmetic
+	This is the tricky case posted on piazza, and testing it was important.
+
+	
+	

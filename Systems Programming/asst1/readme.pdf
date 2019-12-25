@@ -1,0 +1,59 @@
+===============
+Asst1: ++Malloc
+===============
+
+---------------
+Group:
+---------------
+
+Nathan Glikman		nmg116		177003417
+Andrew Cater		ajc398		179009557
+
+---------------
+Design:
+---------------
+
+Our project makes use of a linked list to represent the memory being allocated by
+memory. Each node of the linked list contains 3 values: The size of data allocated, its pointer,
+and the pointer of the next node.
+
+When malloc is first called the list is initialized with one node of size of 4096, and calls the method
+split memory to create a new node of the desired size while subtracting the size of the node, and
+size from the first node, other wise known as the main node.
+
+Split Memory is a function that is given a size. It then removes this size plus the size of a node
+from the main node's size. After this a new node with size, size, is created at the end of the list
+and a pointer to this node is returned.
+
+When the method free is called a series of checks are preformed to ensure that the method was given
+a valid pointer. If the node at the corresponding pointer address is made free and the pointer is passed
+to merge memory.
+
+Merge memory is a function that looks through the linked list for any non-main node that is marked as
+free. If it finds a free node the node is removed from the list and its size plus the size of node is
+added to the size of the main node.
+
+Overall this method employs the use of nodes in a linked list to represent allocated memory by creating
+nodes of the desired size, removing this size plus the size of the meta data from the memory, and re allocating
+freed memory in a way that prevents pockets of unallocated free memory with in it.
+
+---------------------------
+Workload Data and Findings:
+---------------------------
+	
+Time to run Test A: 0.00000245 microseconds
+Time to run Test B: 0.00003110 microseconds
+Time to run Test C: 0.00000709 microseconds
+Time to run Test D: 0.00000242 microseconds
+Time to run Test E: 0.00000050 microseconds
+Time to run Test F: 0.00000017 microseconds
+
+For our implementation of malloc and free, Test B was our longest test case. This is most likely due to the fact
+that Test B is the only test case where we free a set number of times, rather than randomly. Since the way our
+free function works, we traverse through the entire memory array, looking for data to merge together.
+Due to the linear nature of this traversal, the longer the memory blocks are, (50 malloc calls each time) the longer it
+takes to free every pointer.
+
+Test E and F run much faster in this simulation, but this is due to the fact that it is not running 100 - 150 times in each call to the test. It only
+runs 100 times from the loop to find the average time. Since these are custom tests that are meant to strain our malloc and free implementation,
+we figured it would be best to have it run once each time.

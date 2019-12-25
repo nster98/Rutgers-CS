@@ -1,0 +1,96 @@
+===============================
+Nathan Glikman
+Andrew Cater
+
+DUMB Server and Client
+
+Due: 12/11/19
+===============================
+
+How It Works:
+
+	Server:
+		
+		When the server first launches, it needs to set up its socket using the required server socket functions. At each stage it checks
+		for errors and quits if it is unable to start. The server finds the ip address that it is running on by using gethostname() and
+		converting it to an IPv4 format for the function to read. It then takes the user input of the port and launches a server socket
+		using those parameters. It then goes into an infinite loop of accepting client sockets and sending them to a new thread to handle
+		and continues accepting connections until Ctrl-C'd
+
+		The thread itself is also an infinite loop of accepting commands from the client. The first thing it does is read input from
+		the client using the read() function. It assumes that the input it got from the client is the right format, eg. HELLO, CREAT box, etc.
+		It then tokenizes the input string according to the spaces which allows for easy to access checking of correctness.
+
+		The server then goes to check what to do based on the first token, which should be the command. The message box structure is a linked list
+		where each node has its own linked list of messages. By using this message box structure, the server does the correct command based on the
+		input, printing out errors where it finds them.
+
+		The server never shuts down, and threads are closed when the client is done with them. However, there is no need to join the threads
+		in the end, because there is no end in the first place.
+
+	Client:
+
+		When the client launches, it first sets up its client socket using the arguments provided on the command line. It takes the given IP address
+		or hostname, and makes it to a correctly formatted IP address the function can read. It also takes the port and uses both to create a socket
+		to connect to the server. If it can not find a server using those arguments, the client fails to connect and exits. If it is able to connect
+		to the server, it sends its "HELLO" message to the server, and waits for the correct response back, which is "HELLO DUMBv0 ready!". If it
+		gets that response, we are good to go, and the client then waits for the user to input a command
+
+		The user can enter "help" to recieve a list of commands from the server that it will accept. The client does not prompt you to enter arguments
+		after entering a command, and expects the user to input the arguments on the same line as the command. If the user enters the 
+		command and arguments correctly, it then goes ahead and converts the string to something the server can read, namely changing english
+		words to server words, such as "create" to "CREAT" or "put" to "PUTMG". The client is smart however, and knows the user didn't want to have
+		multiple spaces, as this is a message box application. It will trim down the extra spaces and tokenize based on the words the user inputted.
+
+		After the string is nice and ready for the server, it then sends the command to the server and awaits a response. Based on what the user
+		inputted, it will either get back a success message or an error message, letting the user know what they did right or wrong.
+
+		To quit the client, all the user has to do is enter "quit", and the client will send the disconnect message to the server and shut itself,
+		down, ending the process. 
+
+Error Messages:
+
+	ER:WHAT?
+
+		This is the basic error message for when the server can't comprehend what the user has inputted, whether it be an incorrect command
+		or extra arguments for when there shouldn't be
+
+	ER:EXIST
+
+		This error message means that a box already exists, and you can't do an operation on it because it exists, such as creating a box that
+		already exists
+
+	ER:NEXST
+
+		This error message means that a box doesn't exist, so it nothing can be done, such as when trying to close or delete a box that doesn't exist
+		
+	ER:OPEND
+
+		This error message means that a box is opened by another user, and you can not access that box right now. This happens only when trying to open
+		a box that a user has rights too or trying to delete a box that a user currently has open. This error message does not appear when you try to
+		open the same box you already have open, details in the Extra Credit section
+
+	ER:EMPTY
+
+		This error message means that you can not get the next message from the box, since there is no messages to recieve. This happens only when
+		inputting the command next
+
+	ER:NOOPN
+
+		This error messages means that you do not currently have a box open, therefore you can not do the command you tried to. This includes
+		trying to close a box that you don't have open, putting a message in a box you don't have open, or trying to get the next
+		message when you don't have a box open
+		
+	ER:NOTMT
+
+		This error message means that you are trying to delete a box that still has messages
+	
+Extra Credit:
+
+	ER:BXALO
+
+		The error code BXALO means "Box already open". If a user attempts to open the same box or another box while they already have one open,
+		they will be met with this error. This is not in the DUMB protocol, so we have gone ahead and added this error message to the server
+		since a client should only be allowed to work with one box at a time in the first place
+
+

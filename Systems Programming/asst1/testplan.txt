@@ -1,0 +1,31 @@
+==============
+testplan.txt
+==============
+
+=========================================
+Nathan Glikman		nmg116		177003417
+Andrew Cater		ajc398		179009557
+=========================================
+
+Workload Descriptions
+---------------------
+
+Test E:
+-------
+
+Edge Case Test
+	
+	Try to malloc when we have enough memory for the memory requested, but not enough for the metadata
+	Will throw an error, which we have checked for, and will continue to run
+
+Test F:
+-------
+
+Big Malloc Time
+
+	Do 4 mallocs that take up the entire block size
+	Free all 4 mallocs
+	Do 2 mallocs that take up the entire block size
+	Free all 2 mallocs
+	Do 1 malloc that takes up the entire block size
+	Free the entire block
