@@ -1,6 +1,8 @@
 # Rutgers-CS
 Coding projects and assignments done at Rutgers University
 
+# Computer Science Classes
+
 ## Data Structures
 **Course Code: 198:112**    
 Course designed around different data structures and their applications  
@@ -25,3 +27,17 @@ This course teaches students how to think about, build, debug, and test large co
 * C
 * Unix based control
 
+## Internet Technology
+To provide a practical understanding of computer networks with respect to system architectures, protocols, and client-server interaction.  These objectives are accomplished through extensive laboratory exercises.
+
+**Languages**
+* Python
+* Mininet / Bash
+
+# Computer Engineering Classes
+
+## Intro to Computer Systems
+The course covers the fundamental principles of modern multi core computer systems. In particular, it introduces the four main components of multi core computer systems in managing the processor, memory, secondary/tertiary storage and other I/O devices.
+
+**Languages**
+* C
