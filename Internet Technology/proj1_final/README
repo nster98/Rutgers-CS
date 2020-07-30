@@ -1,0 +1,38 @@
+================
+= Names
+================
+
+Nathaniel Glikman		nmg116
+Stephen Scott			sms699
+
+===================
+= Implementation
+===================
+
+To implement the recursive client, we first make sure the client connects to the RS server, as that is the initial point of contact. The client communicates with the RS server, and takes
+down a list of every connection in the DNS table it needs. If it finds an A, it stores it in sequence in a final output array for later. If it finds an NS however, it stores the TS server
+hostname in an array and also takes note in the final output array. It then opens a new socket to the TS server that we need, and the client looks up what is requested. After it's done
+looking through TS and RS, it closes the connections and outputs each line to the file RESOLVED.txt
+
+================
+= Known Issues
+================
+
+Due to the implementation of the code and the project requirements, the client can only connect to one TS server. If it got a different TS server back from the RS server, it wouldn't be
+able to connect to that server. Although, this is not required, due to the command line input only requiring 2 different ports. 
+
+To deal with case-insensitivity, the client makes the hostname string all lowercase, and uses that to check against the RS and TS DNS tables. If the DNS tables had uppercase
+letters, there would be an error in checking. However, the hostnames in the DNS tables are all lowercase, which is standard.
+
+=================
+= Problems Faced
+=================
+
+There were slight problems due to understanding the requirements of the project, but were remedied quick by reading over how the client is supposed to connect to the different servers
+
+================
+= Learned
+================
+
+We learned how to implement a 2 socket connection to a client, which we have not done before, nor knew it was something that is common. We also learned how to deal with
+certain errors that arise when transfering data over a socket, and how to fix it

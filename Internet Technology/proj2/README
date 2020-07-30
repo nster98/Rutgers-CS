@@ -1,0 +1,38 @@
+====================
+= Names
+====================
+
+Nathaniel Glikman	nmg116
+Stephen Scott		sms699
+
+===================
+= Implementation
+===================
+
+To implement the LS server to communicate with 2 different TS servers, we used the select() function in python. The select function takes in 3 different lists of sockets,
+and we specifically used only the reading portion of that list. Both the TS sockets used select with a timeout of 10 seconds. This way, the recv() method would be non-blocking,
+and the code can continue if the TS server doesn't send anything back. We then check which DNS lookup the TS servers sent to the client query, and send the client back any IPs
+that the LS has.
+
+======================
+= Issues
+======================
+
+There are currently no known issues or bugs in the code, besides for weird functionality of the select() method, where the timeout of 10 seconds doesn't actually wait 10 seconds,
+and just continues as if it knows it won't get anything back from the TS server. However, this could be something that we are not aware of from the documentation for select(),
+and could just be an error in understanding how select() works in the background.
+
+====================
+= Problems
+====================
+
+The most common problem we faced when making this project is refactoring the code we made for the first project to work with the implementation of this project. Since they were so
+similar in how to solve, copying the code and using it again was the best option. However, this came with unintended issues and bugs that we then had to go and find. In the
+end, we were able to find and fix the code to work with the different implementation.
+
+=====================
+= Learned
+=====================
+
+This was the first time working with non-blocking signals, and there is a lot to keep track of when working asyncronously. It was a good learning experience that will help
+in future projects.
