@@ -28,6 +28,8 @@ This course teaches students how to think about, build, debug, and test large co
 * Unix based control
 
 ## Internet Technology
+**Course Code: 198:352**
+
 To provide a practical understanding of computer networks with respect to system architectures, protocols, and client-server interaction.  These objectives are accomplished through extensive laboratory exercises.
 
 **Languages**
@@ -37,7 +39,21 @@ To provide a practical understanding of computer networks with respect to system
 # Computer Engineering Classes
 
 ## Intro to Computer Systems
+**Course Code: 332:434**
+
 The course covers the fundamental principles of modern multi core computer systems. In particular, it introduces the four main components of multi core computer systems in managing the processor, memory, secondary/tertiary storage and other I/O devices.
 
 **Languages**
 * C
+
+## Software Engineering
+**Course Code: 332:452**
+
+The key objective of this course is to learn modular design of software and describe the design using symbolic representations (UML diagrams). The course covers software life-cycle models and different phases of software development process.
+The course focuses on team-based, hands-on development of demonstrable software, which requires a great deal of programming. However, this is not a programming course and does not teach any particular programming language. Students are assumed to have solid programming knowledge and are ready to learn best practices and ideas about software development. An ideal background knowledge includes a traditional programming language, such as Java, C++, or C#, and Web programming languages, such as PHP and JavaScript, as well as relational database programming (using SQL).
+
+[Github Link](https://github.com/greg300/team9)
+
+**Languages**
+* Javascript
+* Arduino
