@@ -1,0 +1,9 @@
+I am pthread 169668608, searching from 0 to 1000.
+I am pthread 169668608 and I found the key at 250
+I am pthread 169668608 and I found the key at 500
+I am pthread 169668608 and I found the key at 750
+Max = 100
+Key found at index: 250
+Key found at index: 500
+Key found at index: 750
+Search took    0.228 ms.
